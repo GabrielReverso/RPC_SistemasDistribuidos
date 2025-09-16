@@ -1,0 +1,25 @@
+{
+	"name": "rcp",
+	"version": "1.0.0",
+	"description": " RCP implementation",
+	"license": "ISC",
+	"author": "Gabriel Reverso Pereira",
+	"type": "commonjs",
+	"scripts": {
+		"server": "ts-node _server/server.ts",
+		"client": "ts-node _client/client.ts",
+		"generate-ts": "protoc --plugin=protoc-gen-ts_proto=node_modules\\.bin\\protoc-gen-ts_proto.cmd --ts_proto_out=_service --ts_proto_opt=outputServices=grpc-js,esModuleInterop=true -I . calculator.proto"
+	},
+	"devDependencies": {
+		"@types/node": "^24.5.0",
+		"grpc-tools": "^1.13.0",
+		"protoc-gen-ts": "^0.8.7",
+		"ts-node": "^10.9.2",
+		"ts-proto": "^2.7.7",
+		"typescript": "^5.9.2"
+	},
+	"dependencies": {
+		"@grpc/grpc-js": "^1.14.0",
+		"@grpc/proto-loader": "^0.8.0"
+	}
+}
