@@ -1,0 +1,15 @@
+{
+  "name": "client_rcp",
+  "version": "1.0.0",
+  "description": "Client-side RCP implementation",
+  "license": "ISC",
+  "author": "Gabriel Reverso Pereira",
+  "type": "commonjs",
+  "main": "src/client.ts",
+  "scripts": {
+    "dev": "node src/client.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}
