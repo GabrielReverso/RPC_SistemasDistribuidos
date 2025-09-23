@@ -1,18 +1,32 @@
-import { CalculatorClient } from "../_service/calculator";
+import express from "express";
 import * as grpc from "@grpc/grpc-js";
+import { CalculatorClient } from "../_service/calculator";
 
-function main() {
+const app = express();
+app.use(express.json());
+
+app.use((req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "*"); // permite qualquer origem
+	res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS"); // métodos permitidos
+	res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization"); // headers permitidos
+	if (req.method === "OPTIONS") return res.sendStatus(204); // preflight
+	next();
+});
+
+app.post("/add", (req, res) => {
+	const { a, b } = req.body;
+
 	const client = new CalculatorClient(
 		"localhost:50051",
-		// Sem TLS, inseguro, mas ok para teste
 		grpc.credentials.createInsecure()
 	);
 
-	// Tipagem garante que só passamos números
-	client.add({ a: 10, b: 32 }, (err, res) => {
-		if (err) console.error(err);
-		else console.log("Resultado da soma:", res?.result);
+	client.add({ a, b }, (err, response) => {
+		if (err) return res.status(500).json({ error: err.message });
+		res.json(response);
 	});
-}
+});
 
-main();
+app.listen(3000, () => {
+	console.log("Servidor HTTP rodando na porta 3000");
+});
