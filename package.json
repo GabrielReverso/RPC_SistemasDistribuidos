@@ -11,6 +11,7 @@
 		"generate-ts": "protoc --plugin=protoc-gen-ts_proto=node_modules\\.bin\\protoc-gen-ts_proto.cmd --ts_proto_out=_service --ts_proto_opt=outputServices=grpc-js,esModuleInterop=true -I . calculator.proto"
 	},
 	"devDependencies": {
+		"@types/express": "^5.0.3",
 		"@types/node": "^24.5.0",
 		"concurrently": "^9.2.1",
 		"grpc-tools": "^1.13.0",
