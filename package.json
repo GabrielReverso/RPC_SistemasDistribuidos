@@ -1,7 +1,7 @@
 {
-	"name": "rcp",
+	"name": "rpc",
 	"version": "1.0.0",
-	"description": " RCP implementation",
+	"description": " RPC implementation",
 	"license": "ISC",
 	"author": "Gabriel Reverso Pereira",
 	"type": "commonjs",
