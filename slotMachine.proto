@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package slotMachine;
+
+service SlotMachine {
+  rpc RandomPlay (EmptyRequest) returns (RandomPlayResponse);
+  rpc CalculateJackpot (CalculateJackpotRequest) returns (CalculateJackpotResponse);
+}
+
+message EmptyRequest {}
+
+message RandomPlayResponse {
+  string slot0 = 1;
+  string slot1 = 2;
+  string slot2 = 3;
+}
+
+message CalculateJackpotRequest {
+  string slot0 = 1;
+  string slot1 = 2;
+  string slot2 = 3;
+  double money = 4;
+}
+
+message CalculateJackpotResponse {
+  double result = 1;
+}

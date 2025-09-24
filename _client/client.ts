@@ -1,6 +1,6 @@
 import express from "express";
 import * as grpc from "@grpc/grpc-js";
-import { CalculatorClient } from "../_service/calculator";
+import { SlotMachineClient } from "../_service/slotMachine";
 
 const app = express();
 app.use(express.json());
@@ -19,18 +19,18 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.post("/add", (req, res) => {
+app.post("/randomPlay", (req, res) => {
 	const { a, b } = req.body;
 
-	const client = new CalculatorClient(
+	const client = new SlotMachineClient(
 		"localhost:50051",
 		grpc.credentials.createInsecure()
 	);
 
-	client.add({ a, b }, (err, response) => {
+	/* client.add({ a, b }, (err, response) => {
 		if (err) return res.status(500).json({ error: err.message });
 		res.json(response);
-	});
+	}); */
 });
 
 app.listen(3000, () => {
