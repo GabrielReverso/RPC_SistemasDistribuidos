@@ -1,20 +1,204 @@
+:root {
+	--primary: #ee507f;
+	--secondary: #243365;
+	--detail: #fcad46;
+	--border: #040b17;
+	--light: #fbb3d3;
+}
+
 body {
 	overflow: hidden;
 	height: 100dvh;
 	width: 100dvw;
+	background-color: #775ba7;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-#app {
-	height: 100%;
-	width: 100%;
+#slot-machine {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+#sm-bg-decor {
+	background-color: var(--primary);
+	width: 30rem;
+	height: 10rem;
+	border-radius: 1rem;
+	border: 4px solid var(--detail);
+	place-self: center;
+	margin-top: 3rem;
+	position: absolute;
+	z-index: -1;
+}
+
+.sm-frame-wrapper {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	gap: 1rem;
 }
 
-#wrapper {
+.shadow {
 	display: flex;
-	gap: 1rem;
+	flex-direction: column;
+	align-items: center;
+	filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
+}
+
+#sm-frame-decor {
+	background-color: var(--primary);
+	width: 25rem;
+	height: 6rem;
+	border: 3px solid var(--detail);
+	border-bottom: var(--primary);
+	border-top-left-radius: 0.8rem;
+	border-top-right-radius: 0.8rem;
+	margin-bottom: -3px;
+	z-index: 2;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#sm-frame-decor .left,
+#sm-frame-decor .right {
+	position: absolute;
+	background-color: transparent;
+	height: 1rem;
+	width: 1rem;
+	bottom: 0;
+}
+
+#sm-frame-decor .right {
+	right: calc(-1rem - 3px);
+	border-bottom-left-radius: 0.6rem;
+	border-bottom: 3px solid var(--detail);
+	border-left: 3px solid var(--detail);
+}
+
+#sm-frame-decor .right::before {
+	content: "";
+	height: 1rem;
+	width: 1rem;
+	position: absolute;
+	bottom: -7px;
+	left: -7px;
+	border-bottom-left-radius: 0.8rem;
+	border-bottom: 4px solid var(--primary);
+	border-left: 4px solid var(--primary);
+}
+
+#sm-frame-decor .left {
+	left: calc(-1rem - 3px);
+	border-bottom-right-radius: 0.6rem;
+	border-bottom: 3px solid var(--detail);
+	border-right: 3px solid var(--detail);
+}
+
+#sm-frame-decor .left::before {
+	content: "";
+	height: 1rem;
+	width: 1rem;
+	position: absolute;
+	bottom: -7px;
+	right: -7px;
+	border-bottom-right-radius: 0.8rem;
+	border-bottom: 4px solid var(--primary);
+	border-right: 4px solid var(--primary);
+}
+
+.display {
+	margin-top: 1rem;
+	width: 90%;
+	height: 80%;
+	background-color: var(--secondary);
+	border-radius: 0.6rem;
+	box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--detail);
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bolder;
+}
+
+.display p {
+	font-size: 60px;
+}
+
+#sm-frame {
+	background-color: var(--primary);
+	width: 35rem;
+	height: 20rem;
+	border: 3px solid var(--detail);
+	border-radius: 0.8rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#sm-slots-frame {
+	height: 80%;
+	width: 80%;
+	background-color: var(--secondary);
+	border-radius: 1rem;
+	box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#sm-slots {
+	background-color: var(--border);
+	border-radius: 1rem;
+	height: 70%;
+	width: 80%;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.slot {
+	height: 80%;
+	width: 28%;
+	background-color: #fed593;
+	border-radius: 0.6rem;
+}
+
+.base-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	perspective: 1000px;
+	perspective-origin: 50% 60%;
+	z-index: -1;
+	filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
+}
+
+#sm-keyboard {
+	height: 10rem;
+	width: 35rem;
+	background-color: var(--primary);
+	transform: rotatex(75deg);
+	margin-top: -4rem;
+	border-bottom-left-radius: 0.8rem;
+	border-bottom-right-radius: 0.8rem;
+	border-bottom: 8px solid var(--light);
+	z-index: -1;
+}
+
+#sm-keyboard-height {
+	margin-top: -4rem;
+	height: 2rem;
+	width: 37.8rem;
+	background-color: var(--primary);
+	border-top-left-radius: 0.2rem;
+	border-top-right-radius: 0.2rem;
+	border-bottom-left-radius: 0.8rem;
+	border-bottom-right-radius: 0.8rem;
+	z-index: -2;
 }

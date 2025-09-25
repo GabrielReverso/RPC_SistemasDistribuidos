@@ -5,19 +5,40 @@
     <meta charset="UTF-8" />
     <title>Vite + TS</title>
     <link href="styles.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="/favicon.png" />
 </head>
 
 <body>
     <div id="app">
-        <div id="wrapper">
-            <input type="numeric" id="a">
-            +
-            <input type="numeric" id="b">
-        </div>
-        <button>
-            Somar
-        </button>
-        <input type="text" disabled id="res">
+        <main id="slot-machine">
+            <div id="sm-bg-decor"></div>
+            <div class="sm-frame-wrapper">
+                <div class="shadow">
+                    <div id="sm-frame-decor">
+                        <span class="left"></span>
+                        <div class="display">
+                            <p>JACKPOT</p>
+                        </div>
+                        <span class="right"></span>
+                    </div>
+                    <div id="sm-frame">
+                        <section id="sm-slots-frame">
+                            <div id="sm-slots">
+                                <span class="slot"></span>
+                                <span class="slot"></span>
+                                <span class="slot"></span>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="base-wrapper">
+                    <div id="sm-keyboard"></div>
+                    <div id="sm-keyboard-height"></div>
+                    <div id="sm-base"></div>
+                </div>
+                <div id="floor"></div>
+            </div>
+        </main>
     </div>
     <script type="module" src="/src/main.ts"></script>
 </body>
