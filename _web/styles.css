@@ -166,6 +166,12 @@ body {
 	width: 28%;
 	background-color: #fed593;
 	border-radius: 0.6rem;
+	will-change: contents;
+	transition: all 0.1s ease-in-out;
+	font-size: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .base-wrapper {
@@ -176,7 +182,7 @@ body {
 	perspective: 1000px;
 	perspective-origin: 50% 60%;
 	z-index: -1;
-	filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
+	filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.3));
 }
 
 #sm-keyboard {
@@ -187,7 +193,7 @@ body {
 	margin-top: -4rem;
 	border-bottom-left-radius: 0.8rem;
 	border-bottom-right-radius: 0.8rem;
-	border-bottom: 8px solid var(--light);
+	border-bottom: 10px solid var(--light);
 	z-index: -1;
 }
 
@@ -208,7 +214,8 @@ body {
 	width: 32rem;
 	background-color: #d63c70;
 	z-index: -4;
-	box-shadow: inset 0px 10px 4px 0px rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0px 20px 4px 0px rgba(0, 0, 0, 0.3);
+	filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1));
 }
 
 #floor {
@@ -216,4 +223,5 @@ body {
 	width: 40rem;
 	background-color: #474296;
 	border-radius: 1rem;
+	filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.2));
 }
