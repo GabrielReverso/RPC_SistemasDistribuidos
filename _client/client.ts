@@ -1,6 +1,10 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import * as grpc from "@grpc/grpc-js";
-import { SlotMachineClient } from "../_service/slotMachine";
+import {
+	CalculateJackpotResponse,
+	SlotMachineClient,
+} from "../_service/slotMachine";
+import { ApiResponse } from "../api-response";
 
 const app = express();
 app.use(express.json());
@@ -19,19 +23,38 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.post("/randomPlay", (req, res) => {
-	const { a, b } = req.body;
+app.post(
+	"/spin",
+	(
+		req: Request<{}, {}, { bet: number }>,
+		res: Response<ApiResponse<CalculateJackpotResponse>>
+	) => {
+		try {
+			const client = new SlotMachineClient(
+				"localhost:50051",
+				grpc.credentials.createInsecure()
+			);
 
-	const client = new SlotMachineClient(
-		"localhost:50051",
-		grpc.credentials.createInsecure()
-	);
-
-	/* client.add({ a, b }, (err, response) => {
-		if (err) return res.status(500).json({ error: err.message });
-		res.json(response);
-	}); */
-});
+			client.randomPlay({}, (err, spinResult) => {
+				if (err)
+					return res.json({ success: false, error: err.message });
+				client.calculateJackpot(
+					{ ...spinResult, bet: req.body.bet },
+					(err, response) => {
+						if (err)
+							return res.json({
+								success: false,
+								error: err.message,
+							});
+						res.json({ success: true, data: response });
+					}
+				);
+			});
+		} catch (error) {
+			return res.json({ success: false, error: error.message });
+		}
+	}
+);
 
 app.listen(3000, () => {
 	console.log(

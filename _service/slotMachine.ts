@@ -34,11 +34,15 @@ export interface CalculateJackpotRequest {
   slot0: string;
   slot1: string;
   slot2: string;
-  money: number;
+  bet: number;
 }
 
 export interface CalculateJackpotResponse {
-  result: number;
+  profit: number;
+  result: string;
+  slot0: string;
+  slot1: string;
+  slot2: string;
 }
 
 function createBaseEmptyRequest(): EmptyRequest {
@@ -177,7 +181,7 @@ export const RandomPlayResponse: MessageFns<RandomPlayResponse> = {
 };
 
 function createBaseCalculateJackpotRequest(): CalculateJackpotRequest {
-  return { slot0: "", slot1: "", slot2: "", money: 0 };
+  return { slot0: "", slot1: "", slot2: "", bet: 0 };
 }
 
 export const CalculateJackpotRequest: MessageFns<CalculateJackpotRequest> = {
@@ -191,8 +195,8 @@ export const CalculateJackpotRequest: MessageFns<CalculateJackpotRequest> = {
     if (message.slot2 !== "") {
       writer.uint32(26).string(message.slot2);
     }
-    if (message.money !== 0) {
-      writer.uint32(33).double(message.money);
+    if (message.bet !== 0) {
+      writer.uint32(33).double(message.bet);
     }
     return writer;
   },
@@ -233,7 +237,7 @@ export const CalculateJackpotRequest: MessageFns<CalculateJackpotRequest> = {
             break;
           }
 
-          message.money = reader.double();
+          message.bet = reader.double();
           continue;
         }
       }
@@ -250,7 +254,7 @@ export const CalculateJackpotRequest: MessageFns<CalculateJackpotRequest> = {
       slot0: isSet(object.slot0) ? globalThis.String(object.slot0) : "",
       slot1: isSet(object.slot1) ? globalThis.String(object.slot1) : "",
       slot2: isSet(object.slot2) ? globalThis.String(object.slot2) : "",
-      money: isSet(object.money) ? globalThis.Number(object.money) : 0,
+      bet: isSet(object.bet) ? globalThis.Number(object.bet) : 0,
     };
   },
 
@@ -265,8 +269,8 @@ export const CalculateJackpotRequest: MessageFns<CalculateJackpotRequest> = {
     if (message.slot2 !== "") {
       obj.slot2 = message.slot2;
     }
-    if (message.money !== 0) {
-      obj.money = message.money;
+    if (message.bet !== 0) {
+      obj.bet = message.bet;
     }
     return obj;
   },
@@ -279,19 +283,31 @@ export const CalculateJackpotRequest: MessageFns<CalculateJackpotRequest> = {
     message.slot0 = object.slot0 ?? "";
     message.slot1 = object.slot1 ?? "";
     message.slot2 = object.slot2 ?? "";
-    message.money = object.money ?? 0;
+    message.bet = object.bet ?? 0;
     return message;
   },
 };
 
 function createBaseCalculateJackpotResponse(): CalculateJackpotResponse {
-  return { result: 0 };
+  return { profit: 0, result: "", slot0: "", slot1: "", slot2: "" };
 }
 
 export const CalculateJackpotResponse: MessageFns<CalculateJackpotResponse> = {
   encode(message: CalculateJackpotResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    if (message.result !== 0) {
-      writer.uint32(9).double(message.result);
+    if (message.profit !== 0) {
+      writer.uint32(9).double(message.profit);
+    }
+    if (message.result !== "") {
+      writer.uint32(18).string(message.result);
+    }
+    if (message.slot0 !== "") {
+      writer.uint32(26).string(message.slot0);
+    }
+    if (message.slot1 !== "") {
+      writer.uint32(34).string(message.slot1);
+    }
+    if (message.slot2 !== "") {
+      writer.uint32(42).string(message.slot2);
     }
     return writer;
   },
@@ -308,7 +324,39 @@ export const CalculateJackpotResponse: MessageFns<CalculateJackpotResponse> = {
             break;
           }
 
-          message.result = reader.double();
+          message.profit = reader.double();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.result = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.slot0 = reader.string();
+          continue;
+        }
+        case 4: {
+          if (tag !== 34) {
+            break;
+          }
+
+          message.slot1 = reader.string();
+          continue;
+        }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.slot2 = reader.string();
           continue;
         }
       }
@@ -321,13 +369,31 @@ export const CalculateJackpotResponse: MessageFns<CalculateJackpotResponse> = {
   },
 
   fromJSON(object: any): CalculateJackpotResponse {
-    return { result: isSet(object.result) ? globalThis.Number(object.result) : 0 };
+    return {
+      profit: isSet(object.profit) ? globalThis.Number(object.profit) : 0,
+      result: isSet(object.result) ? globalThis.String(object.result) : "",
+      slot0: isSet(object.slot0) ? globalThis.String(object.slot0) : "",
+      slot1: isSet(object.slot1) ? globalThis.String(object.slot1) : "",
+      slot2: isSet(object.slot2) ? globalThis.String(object.slot2) : "",
+    };
   },
 
   toJSON(message: CalculateJackpotResponse): unknown {
     const obj: any = {};
-    if (message.result !== 0) {
+    if (message.profit !== 0) {
+      obj.profit = message.profit;
+    }
+    if (message.result !== "") {
       obj.result = message.result;
+    }
+    if (message.slot0 !== "") {
+      obj.slot0 = message.slot0;
+    }
+    if (message.slot1 !== "") {
+      obj.slot1 = message.slot1;
+    }
+    if (message.slot2 !== "") {
+      obj.slot2 = message.slot2;
     }
     return obj;
   },
@@ -337,7 +403,11 @@ export const CalculateJackpotResponse: MessageFns<CalculateJackpotResponse> = {
   },
   fromPartial<I extends Exact<DeepPartial<CalculateJackpotResponse>, I>>(object: I): CalculateJackpotResponse {
     const message = createBaseCalculateJackpotResponse();
-    message.result = object.result ?? 0;
+    message.profit = object.profit ?? 0;
+    message.result = object.result ?? "";
+    message.slot0 = object.slot0 ?? "";
+    message.slot1 = object.slot1 ?? "";
+    message.slot2 = object.slot2 ?? "";
     return message;
   },
 };
