@@ -59,7 +59,7 @@ function checkSlots(slots: string[], bet: number): CalculateJackpotResponse {
 				result: "jackpot!",
 				slot0: slots[0],
 				slot1: slots[1],
-				slot2: slots[3],
+				slot2: slots[2],
 			}; // JACKPOT -> Dobro da aposta
 		case 2:
 			return {
