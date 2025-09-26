@@ -21,6 +21,7 @@ Um projeto de **máquina caça-níqueis** desenvolvido com **TypeScript**, **Vit
 -   [Vite](https://vitejs.dev/)
 -   [TypeScript](https://www.typescriptlang.org/)
 -   [gRPC](https://grpc.io/) com Node.js
+-   [Express](https://expressjs.com)
 -   HTML + CSS
 
 ## 🚀 Como executar
