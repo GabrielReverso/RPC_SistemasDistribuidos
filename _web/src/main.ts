@@ -112,10 +112,14 @@ function showMessage(message: string) {
 	switch (message) {
 		case "JACKPOT": {
 			displayText.style.fontSize = "60px";
+			displayText.classList.add("winner");
+			setTimeout(() => displayText.classList.remove("winner"), 4000);
 			break;
 		}
 		case "2 OF A KIND": {
 			displayText.style.fontSize = "57px";
+			displayText.classList.add("winner");
+			setTimeout(() => displayText.classList.remove("winner"), 3000);
 			break;
 		}
 		case "BETTER LUCK NEXT TIME!": {
@@ -123,6 +127,7 @@ function showMessage(message: string) {
 			break;
 		}
 		default: {
+			displayText.classList.remove("winner");
 			displayText.style.fontSize = "60px";
 		}
 	}

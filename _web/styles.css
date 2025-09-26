@@ -301,3 +301,19 @@ body {
 #lever-handle.spining {
 	pointer-events: none;
 }
+
+@keyframes winnerBlink {
+	0% {
+		color: var(--detail);
+	}
+	50% {
+		color: #ffffff;
+	}
+	100% {
+		color: var(--detail);
+	}
+}
+
+.display p.winner {
+	animation: winnerBlink 0.3s linear infinite;
+}
