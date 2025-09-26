@@ -35,6 +35,8 @@ handle.addEventListener("click", () => {
 	lever.classList.add("pulled");
 	handle.classList.add("pulled", "spining");
 
+	showMessage("SPINNING");
+
 	// volta a posição original depois de 1s
 	setTimeout(() => {
 		lever.classList.remove("pulled");
@@ -116,8 +118,12 @@ function showMessage(message: string) {
 			displayText.style.fontSize = "57px";
 			break;
 		}
-		default: {
+		case "BETTER LUCK NEXT TIME!": {
 			displayText.style.fontSize = "30px";
+			break;
+		}
+		default: {
+			displayText.style.fontSize = "60px";
 		}
 	}
 	displayText.innerText = message;

@@ -72,7 +72,7 @@ function checkSlots(slots: string[], bet: number): CalculateJackpotResponse {
 		case 3:
 			return {
 				profit: 0,
-				result: "BETTER LUCK NEXT TIME",
+				result: "BETTER LUCK NEXT TIME!",
 				slot0: slots[0],
 				slot1: slots[1],
 				slot2: slots[2],
