@@ -63,7 +63,7 @@ function checkSlots(slots: string[], bet: number): CalculateJackpotResponse {
 			}; // JACKPOT -> Dobro da aposta
 		case 2:
 			return {
-				profit: bet * 0.2,
+				profit: bet * 1.2,
 				result: "2 OF A KIND",
 				slot0: slots[0],
 				slot1: slots[1],
