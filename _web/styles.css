@@ -14,12 +14,14 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	user-select: none;
 }
 
 #slot-machine {
 	display: flex;
 	flex-direction: column;
 	position: relative;
+	pointer-events: none;
 }
 
 #sm-bg-decor {
@@ -38,6 +40,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	pointer-events: none;
 }
 
 .shadow {
@@ -61,6 +64,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	box-shadow: inset 0px 5px 5px 0px rgba(255, 255, 255, 0.2);
 }
 
 #sm-frame-decor .left,
@@ -126,7 +130,9 @@ body {
 }
 
 .display p {
+	will-change: contents;
 	font-size: 60px;
+	filter: drop-shadow(0px 0px 2px var(--detail));
 }
 
 #sm-frame {
@@ -224,4 +230,69 @@ body {
 	background-color: #474296;
 	border-radius: 1rem;
 	filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.2));
+}
+
+#lever-wrapper {
+	width: 10rem;
+	height: 13rem;
+	position: absolute;
+	right: calc(-7.5rem - 3px);
+	top: 20%;
+	display: flex;
+	align-items: flex-end;
+	z-index: -1;
+	perspective: 1000px;
+	perspective-origin: 20% 30%;
+	pointer-events: none;
+}
+
+#lever-base {
+	width: 2rem;
+	height: 8rem;
+	border-top-right-radius: 1rem;
+	border-bottom-right-radius: 1rem;
+	background-color: #fbad4a;
+	box-shadow: inset 0px -5px 5px 0px rgba(0, 0, 0, 0.3),
+		inset 0px 5px 5px 0px rgba(255, 255, 255, 0.3);
+	filter: drop-shadow(1px 0px 3px rgba(0, 0, 0, 0.2));
+}
+
+#lever {
+	height: 10rem;
+	width: 0.8rem;
+	background-color: var(--secondary);
+	margin-bottom: 30%;
+	border-bottom-right-radius: 1rem;
+	transform-origin: bottom center;
+	transition: transform 0.4s ease;
+	box-shadow: inset 0px -5px 5px 0px rgba(0, 0, 0, 0.2);
+	filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.1));
+}
+
+#lever.pulled {
+	transform: rotateX(-45deg);
+}
+
+#lever-handle {
+	all: unset;
+	height: 2rem;
+	width: 2rem;
+	border-radius: 9999px;
+	background-color: var(--primary);
+	position: absolute;
+	right: -1.1rem;
+	top: 6rem;
+	pointer-events: all;
+	z-index: 5;
+	transition: transform 0.4s ease;
+	cursor: pointer;
+	box-shadow: inset 0px -2px 5px 0px rgba(0, 0, 0, 0.3),
+		inset 0px 5px 3px 0px rgba(255, 255, 255, 0.2);
+	filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0.1));
+}
+
+#lever-handle.pulled {
+	transform: translateY(3.5rem);
+	cursor: default;
+	pointer-events: none;
 }
