@@ -56,7 +56,7 @@ function checkSlots(slots: string[], bet: number): CalculateJackpotResponse {
 		case 1:
 			return {
 				profit: bet * 2,
-				result: "jackpot!",
+				result: "JACKPOT",
 				slot0: slots[0],
 				slot1: slots[1],
 				slot2: slots[2],
@@ -64,7 +64,7 @@ function checkSlots(slots: string[], bet: number): CalculateJackpotResponse {
 		case 2:
 			return {
 				profit: bet * 0.2,
-				result: "2 equal!",
+				result: "2 OF A KIND",
 				slot0: slots[0],
 				slot1: slots[1],
 				slot2: slots[2],
@@ -72,7 +72,7 @@ function checkSlots(slots: string[], bet: number): CalculateJackpotResponse {
 		case 3:
 			return {
 				profit: 0,
-				result: "better luck next time!",
+				result: "BETTER LUCK NEXT TIME",
 				slot0: slots[0],
 				slot1: slots[1],
 				slot2: slots[2],
@@ -80,7 +80,7 @@ function checkSlots(slots: string[], bet: number): CalculateJackpotResponse {
 		default:
 			return {
 				profit: 0,
-				result: "better luck next time!",
+				result: "BETTER LUCK NEXT TIME!",
 				slot0: slots[0],
 				slot1: slots[1],
 				slot2: slots[2],

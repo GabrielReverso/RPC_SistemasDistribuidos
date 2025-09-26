@@ -2,14 +2,34 @@ import { CalculateJackpotResponse } from "../../_service/slotMachine";
 import { ApiResponse } from "../../api-response";
 
 const emojis: string[] = [
-  "🍒","🍋","🍊","🍉","🍇","🍓","🥝","🍍","🥭","🍌",
-  "🍎","🍏","🥥","🍑","🍐","🍈","🍆","🥑","🌽","🥕"
+	"🍒",
+	"🍋",
+	"🍊",
+	"🍉",
+	"🍇",
+	"🍓",
+	"🥝",
+	"🍍",
+	"🥭",
+	"🍌",
+	"🍎",
+	"🍏",
+	"🥥",
+	"🍑",
+	"🍐",
+	"🍈",
+	"🍆",
+	"🥑",
+	"🌽",
+	"🥕",
 ];
 
-let spinInterval: number | null = null;
+let spinInterval: NodeJS.Timeout | null = null;
 
-const lever = document.getElementById("lever")!;
-const handle = document.getElementById("lever-handle")!;
+const lever = document.getElementById("lever")! as HTMLButtonElement;
+const handle = document.getElementById("lever-handle")! as HTMLDivElement;
+const slots = document.querySelectorAll<HTMLSpanElement>(".slot")!;
+const displayText = document.querySelector<HTMLParagraphElement>(".display p")!;
 
 handle.addEventListener("click", () => {
 	lever.classList.add("pulled");
@@ -21,12 +41,21 @@ handle.addEventListener("click", () => {
 		handle.classList.remove("pulled");
 	}, 1000);
 
-	spin().then((data) => {
-		console.table(data);
-		if(data.success){
-			stopSpinAnimation([data.data.slot0,data.data.slot1,data.data.slot2]);
-		}
-	}).catch((reason) => console.error("Error: ", reason)).finally(() => handle.classList.remove("spining"))
+	startSpinAnimation();
+
+	spin()
+		.then((data) => {
+			console.table(data);
+			if (data.success) {
+				setTimeout(() => {
+					stopSpinAnimation(
+						[data.data.slot0, data.data.slot1, data.data.slot2],
+						data.data.result
+					);
+				}, 2000);
+			}
+		})
+		.catch((reason) => console.error("Error: ", reason));
 });
 
 async function spin() {
@@ -36,29 +65,60 @@ async function spin() {
 		body: JSON.stringify({ bet: 20 }),
 	});
 	const data: ApiResponse<CalculateJackpotResponse> = await response.json();
-	return data
+	return data;
 }
 
-// --- animação fake dos slots --- //
 function startSpinAnimation() {
-  if (spinInterval) clearInterval(spinInterval);
+	if (spinInterval) clearInterval(spinInterval);
 
-  spinInterval = window.setInterval(() => {
-    slots.forEach((slot) => {
-      const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-      slot.textContent = randomEmoji;
-    });
-  }, 100); // troca a cada 100ms
+	slots.forEach((slot) => {
+		slot.classList.remove("has-result");
+	});
+
+	spinInterval = setInterval(() => {
+		slots.forEach((slot) => {
+			if (!slot.classList.contains("has-result")) {
+				const randomEmoji =
+					emojis[Math.floor(Math.random() * emojis.length)];
+				slot.innerText = randomEmoji;
+			}
+		});
+	}, 100); // troca a cada 100ms
 }
 
-function stopSpinAnimation(finalResult: string[]) {
-  if (spinInterval) {
-    clearInterval(spinInterval);
-    spinInterval = null;
-  }
+function stopSpinAnimation(finalResult: string[], message: string) {
+	// mostra resultado final nos 3 slots
+	slots[0].classList.add("has-result");
+	slots[0].innerText = finalResult[0] ?? "❓";
+	setTimeout(() => {
+		slots[1].classList.add("has-result");
+		slots[1].innerText = finalResult[1] ?? "❓";
+	}, 1000);
+	setTimeout(() => {
+		slots[2].classList.add("has-result");
+		slots[2].innerText = finalResult[2] ?? "❓";
+		handle.classList.remove("spining");
+		if (spinInterval) {
+			clearInterval(spinInterval);
+			spinInterval = null;
+		}
+		showMessage(message);
+	}, 2000);
+}
 
-  // mostra resultado final nos 3 slots
-  slots.forEach((slot, i) => {
-    slot.textContent = finalResult[i] ?? "❓";
-  });
+function showMessage(message: string) {
+	switch (message) {
+		case "JACKPOT": {
+			displayText.style.fontSize = "60px";
+			break;
+		}
+		case "2 OF A KIND": {
+			displayText.style.fontSize = "57px";
+			break;
+		}
+		default: {
+			displayText.style.fontSize = "30px";
+		}
+	}
+	displayText.innerText = message;
 }
