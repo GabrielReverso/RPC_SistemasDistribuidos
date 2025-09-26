@@ -15,6 +15,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	user-select: none;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 #slot-machine {
@@ -125,7 +126,6 @@ body {
 	align-items: center;
 	justify-content: center;
 	color: var(--detail);
-	font-family: Arial, Helvetica, sans-serif;
 	font-weight: bolder;
 }
 
@@ -323,8 +323,7 @@ body {
 	right: -5rem;
 	top: 2.5rem;
 	color: rgba(255, 255, 255, 0.85);
-	font-weight: medium;
-	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
 	transition: all 0.2s ease-in-out;
 	animation: tooltipBlink 1s ease-in-out infinite;
 }
@@ -343,4 +342,106 @@ body {
 	100% {
 		opacity: 1;
 	}
+}
+
+#config {
+	z-index: 99;
+	position: absolute;
+	display: flex;
+	align-items: flex-start;
+	left: -17rem;
+	top: 0;
+	transition: all 0.4s ease-in-out;
+}
+
+#config.open {
+	left: 0;
+}
+
+#menu-handler {
+	all: unset;
+	cursor: pointer;
+	font-size: 40px;
+	height: fit-content;
+	padding-top: 0.3rem;
+	padding-bottom: 1rem;
+	padding-left: 0.5rem;
+	padding-right: 1rem;
+	border-bottom-right-radius: 2rem;
+	text-align: center;
+	background-color: #243365b0;
+	backdrop-filter: blur(10px);
+}
+
+menu {
+	min-height: 30rem;
+	width: 17rem;
+	margin-top: 0;
+	border-bottom-right-radius: 2rem;
+	background-color: #243365b0;
+	backdrop-filter: blur(10px);
+	color: rgba(255, 255, 255, 0.8);
+	font-weight: bold;
+	font-size: 24px;
+	padding-inline: 1rem;
+	padding-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	box-sizing: border-box;
+}
+
+menu > div > p {
+	margin-block: 1rem;
+}
+
+hr {
+	border: none;
+	height: 2px;
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+ul {
+	padding: 0;
+	list-style-type: none;
+}
+
+ul > li {
+	font-size: 16px;
+	margin-block: 5px;
+}
+
+ul > li > span {
+	font-weight: normal;
+}
+
+input {
+	outline: none;
+	border-radius: 1rem;
+	font-size: 20px;
+	width: 5rem;
+	padding-inline: 1rem;
+	padding-block: 0.3rem;
+	background-color: rgba(255, 255, 255, 0.9);
+}
+
+menu .row {
+	display: flex;
+	align-items: center;
+}
+
+menu button {
+	all: unset;
+	font-weight: normal;
+	font-size: 18px;
+	margin-left: 1rem;
+	cursor: pointer;
+}
+
+menu .control {
+	font-size: 18px;
+}
+
+menu .control > span {
+	color: rgb(133, 216, 9);
 }

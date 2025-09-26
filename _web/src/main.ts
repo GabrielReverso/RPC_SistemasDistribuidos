@@ -31,16 +31,29 @@ const lever = document.getElementById("lever")! as HTMLButtonElement;
 const handle = document.getElementById("lever-handle")! as HTMLDivElement;
 const slots = document.querySelectorAll<HTMLSpanElement>(".slot")!;
 const displayText = document.querySelector<HTMLParagraphElement>(".display p")!;
+const menuButton = document.getElementById(
+	"menu-handler"
+)! as HTMLButtonElement;
+const menu = document.getElementById("config")! as HTMLDivElement;
 
 const tooltipTimeout: NodeJS.Timeout | null = setTimeout(
 	() => tooltip.classList.remove("none"),
-	10000
+	100000
 );
 
 handle.addEventListener("click", () => {
 	if (tooltipTimeout) {
 		clearTimeout(tooltipTimeout);
 	}
+
+	if (money < bet || bet <= 0) {
+		alert("Not enough money or invalid bet!");
+		return;
+	}
+
+	money -= bet;
+	setCookie("money", money.toFixed(2).toString());
+	moneySpan.textContent = money.toFixed(2).toString();
 
 	tooltip.classList.add("none");
 
@@ -61,11 +74,17 @@ handle.addEventListener("click", () => {
 		.then((data) => {
 			console.table(data);
 			if (data.success) {
+				const resultData = data.data;
 				setTimeout(() => {
 					stopSpinAnimation(
-						[data.data.slot0, data.data.slot1, data.data.slot2],
-						data.data.result
+						[resultData.slot0, resultData.slot1, resultData.slot2],
+						resultData.result
 					);
+					if (resultData.profit !== 0) {
+						money += resultData.profit;
+						setCookie("money", money.toFixed(2).toString());
+						moneySpan.textContent = money.toFixed(2).toString();
+					}
 				}, 2000);
 			}
 		})
@@ -76,7 +95,7 @@ async function spin() {
 	const response = await fetch("http://localhost:3000/spin", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ bet: 20 }),
+		body: JSON.stringify({ bet: bet }),
 	});
 	const data: ApiResponse<CalculateJackpotResponse> = await response.json();
 	return data;
@@ -145,3 +164,65 @@ function showMessage(message: string) {
 	}
 	displayText.innerText = message;
 }
+
+menuButton.addEventListener("click", () => {
+	menu.classList.toggle("open");
+});
+
+function setCookie(name: string, value: string, days = 365) {
+	const expires = new Date(Date.now() + days * 864e5).toUTCString();
+	document.cookie = `${name}=${encodeURIComponent(
+		value
+	)}; expires=${expires}; path=/`;
+}
+
+function getCookie(name: string): string | null {
+	return document.cookie.split("; ").reduce((r, v) => {
+		const parts = v.split("=");
+		return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+	}, null as string | null);
+}
+
+const moneySpan = document.getElementById("current-money")! as HTMLSpanElement;
+const betSpan = document.getElementById("current-bet")! as HTMLSpanElement;
+
+// pega valores salvos nos cookies, ou usa padrão 0
+let money = parseInt(getCookie("money") || "0", 10);
+let bet = parseInt(getCookie("bet") || "0", 10);
+
+moneySpan.textContent = money.toFixed(2).toString();
+betSpan.textContent = bet.toFixed(2).toString();
+
+// botão de adicionar dinheiro
+const addMoneyInput = document.querySelectorAll<HTMLInputElement>(
+	"aside input[type=number]"
+)[0];
+const addMoneyBtn =
+	document.querySelectorAll<HTMLButtonElement>("aside button")[0];
+
+addMoneyBtn.addEventListener("click", () => {
+	const value = parseInt(addMoneyInput.value || "0", 10);
+	if (value > 0) {
+		money += value;
+		setCookie("money", money.toFixed(2).toString());
+		moneySpan.textContent = money.toFixed(2).toString();
+		addMoneyInput.value = "";
+	}
+});
+
+// botão de definir aposta
+const betInput = document.querySelectorAll<HTMLInputElement>(
+	"aside input[type=number]"
+)[1];
+const setBetBtn =
+	document.querySelectorAll<HTMLButtonElement>("aside button")[1];
+
+setBetBtn.addEventListener("click", () => {
+	const value = parseInt(betInput.value || "0", 10);
+	if (value > 0 && value <= money) {
+		bet = value;
+		setCookie("bet", bet.toFixed(2).toString());
+		betSpan.textContent = bet.toFixed(2).toString();
+		betInput.value = "";
+	}
+});

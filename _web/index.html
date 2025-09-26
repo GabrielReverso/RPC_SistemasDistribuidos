@@ -10,6 +10,37 @@
 
 <body>
     <div id="app">
+        <aside id="config">
+            <menu>
+                <div>
+                    <p>Money</p>
+                    <hr>
+                    <div class="row">
+                        <input type="number" min="0">
+                        <button>Add</button>
+                    </div>
+                    <p class="control">Current: <span>$</span><span id="current-money"></span></p>
+                </div>
+                <div>
+                    <p>Bet value</p>
+                    <hr>
+                    <div class="row">
+                        <input type="number" min="0">
+                        <button>Set bet</button>
+                    </div>
+                    <p class="control">Current: <span>$</span><span id="current-bet"></span></p>
+                </div>
+                <div>
+                    <ul>
+                        Odds
+                        <hr>
+                        <li>JACKPOT: <span>0.0125%</span></li>
+                        <li>2 OF A KIND: <span>14.25%</span></li>
+                    </ul>
+                </div>
+            </menu>
+            <button id="menu-handler">⚙️</button>
+        </aside>
         <main id="slot-machine">
             <div id="sm-bg-decor"></div>
             <div class="sm-frame-wrapper">
