@@ -26,12 +26,24 @@ const emojis: string[] = [
 
 let spinInterval: NodeJS.Timeout | null = null;
 
+const tooltip = document.getElementById("tooltip")! as HTMLParagraphElement;
 const lever = document.getElementById("lever")! as HTMLButtonElement;
 const handle = document.getElementById("lever-handle")! as HTMLDivElement;
 const slots = document.querySelectorAll<HTMLSpanElement>(".slot")!;
 const displayText = document.querySelector<HTMLParagraphElement>(".display p")!;
 
+const tooltipTimeout: NodeJS.Timeout | null = setTimeout(
+	() => tooltip.classList.remove("none"),
+	10000
+);
+
 handle.addEventListener("click", () => {
+	if (tooltipTimeout) {
+		clearTimeout(tooltipTimeout);
+	}
+
+	tooltip.classList.add("none");
+
 	lever.classList.add("pulled");
 	handle.classList.add("pulled", "spining");
 

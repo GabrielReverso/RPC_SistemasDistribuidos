@@ -317,3 +317,30 @@ body {
 .display p.winner {
 	animation: winnerBlink 0.3s linear infinite;
 }
+
+#tooltip {
+	position: absolute;
+	right: -5rem;
+	top: 2.5rem;
+	color: rgba(255, 255, 255, 0.85);
+	font-weight: medium;
+	font-family: Arial, Helvetica, sans-serif;
+	transition: all 0.2s ease-in-out;
+	animation: tooltipBlink 1s ease-in-out infinite;
+}
+
+#tooltip.none {
+	display: none;
+}
+
+@keyframes tooltipBlink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.4;
+	}
+	100% {
+		opacity: 1;
+	}
+}
