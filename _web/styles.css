@@ -296,3 +296,7 @@ body {
 	cursor: default;
 	pointer-events: none;
 }
+
+#lever-handle.spining {
+	pointer-events: none;
+}
